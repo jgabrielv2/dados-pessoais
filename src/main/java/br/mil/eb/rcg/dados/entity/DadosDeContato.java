@@ -1,20 +1,23 @@
 package br.mil.eb.rcg.dados.entity;
 
-import br.mil.eb.rcg.dados.dto.formulario.DadosCadastroContato;
+import br.mil.eb.rcg.dados.dto.formulario.FormularioContato;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.Email;
 
 @Embeddable
 public class DadosDeContato {
 
     private String telefoneCelular;
+    @Email
     private String email;
 
     public DadosDeContato() {
 
     }
-    public DadosDeContato(DadosCadastroContato dadosCadastroContato) {
-        setTelefoneCelular(dadosCadastroContato.telefoneCelular())
-                .setEmail(dadosCadastroContato.email());
+
+    public DadosDeContato(FormularioContato formularioContato) {
+        setTelefoneCelular(formularioContato.telefoneCelular())
+                .setEmail(formularioContato.email());
     }
 
     public String telefoneCelular() {
@@ -33,5 +36,14 @@ public class DadosDeContato {
     public DadosDeContato setEmail(String email) {
         this.email = email;
         return this;
+    }
+
+    public void atualizar(FormularioContato formularioContato) {
+        if (formularioContato.telefoneCelular() != null) {
+            setTelefoneCelular(formularioContato.telefoneCelular());
+        }
+        if (formularioContato.email() != null) {
+            setEmail(formularioContato.email());
+        }
     }
 }

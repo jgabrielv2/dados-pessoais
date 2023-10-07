@@ -1,19 +1,18 @@
 package br.mil.eb.rcg.dados.entity;
 
 
-import br.mil.eb.rcg.dados.dto.formulario.DadosCadastro;
+import br.mil.eb.rcg.dados.dto.formulario.FormularioMilitar;
+import br.mil.eb.rcg.dados.dto.formulario.atualizacao.FormularioAtualizacaoMilitar;
 import jakarta.persistence.*;
 
-@Entity(name = "militar")
+@Entity
+@Table(name = "militar")
 public class Militar {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private PostoGraduacao postoGraduacao;
-    private String nomeDeGuerra;
     @Embedded
     private Endereco endereco;
 
@@ -22,17 +21,19 @@ public class Militar {
 
     @Embedded
     private DadosPessoais dadosPessoais;
+
+    @Embedded
+    private DadosProfissionais dadosProfissionais;
     private Boolean ativo;
 
     public Militar() {
     }
 
-    public Militar(DadosCadastro dadosCadastro) {
-        setPostoGraduacao(dadosCadastro.postoGraduacao())
-                .setNomeDeGuerra(dadosCadastro.nomeDeGuerra())
-                .setEndereco(new Endereco(dadosCadastro.dadosCadastroEndereco()))
-                .setDadosDeContato(new DadosDeContato(dadosCadastro.dadosCadastroContato()))
-                .setDadosPessoais(new DadosPessoais(dadosCadastro.dadosPessoaisCadastro()))
+    public Militar(FormularioMilitar formularioMilitar) {
+        setEndereco(new Endereco(formularioMilitar.formularioEndereco()))
+                .setDadosDeContato(new DadosDeContato(formularioMilitar.formularioContato()))
+                .setDadosPessoais(new DadosPessoais(formularioMilitar.formularioDadosPessoais()))
+                .setDadosProfissionais(new DadosProfissionais(formularioMilitar.formularioDadosProfissionais()))
                 .setAtivo(true);
 
     }
@@ -41,23 +42,6 @@ public class Militar {
         return id;
     }
 
-    public PostoGraduacao postoGraduacao() {
-        return postoGraduacao;
-    }
-
-    public Militar setPostoGraduacao(PostoGraduacao postoGraduacao) {
-        this.postoGraduacao = postoGraduacao;
-        return this;
-    }
-
-    public String nomeDeGuerra() {
-        return nomeDeGuerra;
-    }
-
-    public Militar setNomeDeGuerra(String nomeDeGuerra) {
-        this.nomeDeGuerra = nomeDeGuerra;
-        return this;
-    }
 
     public Endereco endereco() {
         return endereco;
@@ -86,24 +70,51 @@ public class Militar {
         return this;
     }
 
+    public Militar setDadosProfissionais(DadosProfissionais dadosProfissionais) {
+        this.dadosProfissionais = dadosProfissionais;
+        return this;
+    }
+
+    public DadosProfissionais dadosProfissionais() {
+        return dadosProfissionais;
+    }
+
     public Boolean ativo() {
         return ativo;
     }
 
-    public Militar setAtivo(Boolean ativo) {
+    public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
-        return this;
+    }
+
+    public void atualizar(FormularioAtualizacaoMilitar formularioAtualizacaoMilitar) {
+        var endereco = formularioAtualizacaoMilitar.formularioMilitar().formularioEndereco();
+        var contato = formularioAtualizacaoMilitar.formularioMilitar().formularioContato();
+        var dadosPessoais = formularioAtualizacaoMilitar.formularioMilitar().formularioDadosPessoais();
+        var dadosProfissionais = formularioAtualizacaoMilitar.formularioMilitar().formularioDadosProfissionais();
+
+        if (endereco != null)
+            this.endereco().atualizar(endereco);
+
+        if (contato != null)
+            this.dadosDeContato().atualizar(contato);
+
+        if (dadosPessoais != null)
+            this.dadosPessoais().atualizar(dadosPessoais);
+
+        if (dadosProfissionais != null)
+            this.dadosProfissionais().atualizar(dadosProfissionais);
+
     }
 
     @Override
     public String toString() {
         return "Militar{" +
                 "id=" + id +
-                ", postoGraduacao=" + postoGraduacao +
-                ", nomeDeGuerra='" + nomeDeGuerra + '\'' +
                 ", endereco=" + endereco +
                 ", dadosDeContato=" + dadosDeContato +
                 ", dadosPessoais=" + dadosPessoais +
+                ", dadosProfissionais=" + dadosProfissionais +
                 ", ativo=" + ativo +
                 '}';
     }

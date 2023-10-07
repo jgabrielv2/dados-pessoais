@@ -1,15 +1,14 @@
 package br.mil.eb.rcg.dados.entity;
 
-import br.mil.eb.rcg.dados.dto.formulario.DadosPessoaisCadastro;
+import br.mil.eb.rcg.dados.dto.formulario.FormularioDadosPessoais;
 import jakarta.persistence.Embeddable;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Embeddable
 public class DadosPessoais {
 
-    private String identidadeMilitar;
+
     private String identidadeCivil;
-    private String precCp;
     @CPF
     private String cpf;
     private String nome;
@@ -18,22 +17,13 @@ public class DadosPessoais {
 
     }
 
-    public DadosPessoais(DadosPessoaisCadastro dadosPessoaisCadastro) {
-        setIdentidadeMilitar(dadosPessoaisCadastro.identidadeMilitar())
-                .setIdentidadeCivil(dadosPessoaisCadastro.identidadeCivil())
-                .setPrecCp(dadosPessoaisCadastro.precCp())
-                .setCpf(dadosPessoaisCadastro.cpf())
-                .setNome(dadosPessoaisCadastro.nome());
+    public DadosPessoais(FormularioDadosPessoais formularioDadosPessoais) {
+
+        setIdentidadeCivil(formularioDadosPessoais.identidadeCivil())
+                .setCpf(formularioDadosPessoais.cpf())
+                .setNome(formularioDadosPessoais.nome());
     }
 
-    public String identidadeMilitar() {
-        return identidadeMilitar;
-    }
-
-    public DadosPessoais setIdentidadeMilitar(String identidadeMilitar) {
-        this.identidadeMilitar = identidadeMilitar;
-        return this;
-    }
 
     public String identidadeCivil() {
         return identidadeCivil;
@@ -44,14 +34,6 @@ public class DadosPessoais {
         return this;
     }
 
-    public String precCp() {
-        return precCp;
-    }
-
-    public DadosPessoais setPrecCp(String precCp) {
-        this.precCp = precCp;
-        return this;
-    }
 
     public String cpf() {
         return cpf;
@@ -69,5 +51,18 @@ public class DadosPessoais {
     public DadosPessoais setNome(String nome) {
         this.nome = nome;
         return this;
+    }
+
+    public void atualizar(FormularioDadosPessoais formularioDadosPessoais) {
+        if (formularioDadosPessoais.identidadeCivil() != null) {
+            setIdentidadeCivil(formularioDadosPessoais.identidadeCivil());
+        }
+        if (formularioDadosPessoais.cpf() != null) {
+            setCpf(formularioDadosPessoais.cpf());
+        }
+        if (formularioDadosPessoais.nome() != null) {
+            setNome(formularioDadosPessoais.nome());
+        }
+
     }
 }

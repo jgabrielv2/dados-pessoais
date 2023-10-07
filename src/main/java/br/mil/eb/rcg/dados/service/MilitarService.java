@@ -1,6 +1,7 @@
 package br.mil.eb.rcg.dados.service;
 
-import br.mil.eb.rcg.dados.dto.formulario.DadosCadastro;
+import br.mil.eb.rcg.dados.dto.formulario.FormularioMilitar;
+import br.mil.eb.rcg.dados.dto.formulario.atualizacao.FormularioAtualizacaoMilitar;
 import br.mil.eb.rcg.dados.dto.listagem.DadosListagemMilitar;
 import br.mil.eb.rcg.dados.entity.Militar;
 import br.mil.eb.rcg.dados.repository.MilitarRepository;
@@ -19,23 +20,37 @@ public class MilitarService {
     }
 
     @Transactional
-    public DadosListagemMilitar cadastrarMilitar(DadosCadastro dadosCadastro) {
-        var militar = new Militar(dadosCadastro);
+    public DadosListagemMilitar cadastrarMilitar(FormularioMilitar formularioMilitar) {
+        var militar = new Militar(formularioMilitar);
         militarRepository.save(militar);
         return new DadosListagemMilitar(militar);
     }
 
     public DadosListagemMilitar buscarMilitarPorId(Long id) {
-        var militar = militarRepository.findById(id).orElseThrow();
+        var militar = militarRepository.getReferenceById(id);
         return new DadosListagemMilitar(militar);
     }
 
     public List<DadosListagemMilitar> buscarTodosMilitares() {
-        var militares = militarRepository.findAll();
+        var militares = militarRepository.findByAtivoTrue();
         return militares.stream().map(DadosListagemMilitar::new).toList();
     }
 
+    public DadosListagemMilitar buscarPorCpf(String cpf) {
+        var militar = militarRepository.findByDadosPessoais_Cpf(cpf).orElseThrow();
+        return new DadosListagemMilitar(militar);
+    }
 
+    public DadosListagemMilitar atualizarMilitar(FormularioAtualizacaoMilitar formularioAtualizacaoMilitar) {
+        var militar = militarRepository.getReferenceById(formularioAtualizacaoMilitar.id());
+        militar.atualizar(formularioAtualizacaoMilitar);
+        return new DadosListagemMilitar(militar);
+    }
+
+    public void excluirMilitar(Long id) {
+        var militar = militarRepository.findById(id).orElseThrow();
+        militar.setAtivo(false);
+    }
 
 
 }

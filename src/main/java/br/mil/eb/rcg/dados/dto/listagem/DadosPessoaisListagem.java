@@ -1,5 +1,14 @@
 package br.mil.eb.rcg.dados.dto.listagem;
 
-public record DadosPessoaisListagem(String identidadeCivil, String identidadeMilitar, String cpf,
-                                    String precCp, String nome) {
+import br.mil.eb.rcg.dados.entity.Militar;
+
+public record DadosPessoaisListagem(String identidadeCivil, String cpf, String nome) {
+
+    public DadosPessoaisListagem(Militar militar){
+        this(
+                militar.dadosPessoais().identidadeCivil(),
+                militar.dadosPessoais().cpf(),
+                militar.dadosPessoais().nome()
+        );
+    }
 }

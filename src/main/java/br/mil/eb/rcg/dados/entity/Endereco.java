@@ -1,24 +1,11 @@
 package br.mil.eb.rcg.dados.entity;
 
-import br.mil.eb.rcg.dados.dto.formulario.DadosCadastroEndereco;
+import br.mil.eb.rcg.dados.dto.formulario.FormularioEndereco;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class Endereco {
 
-
-    public Endereco() {
-
-    }
-    public Endereco(DadosCadastroEndereco dadosCadastroEndereco) {
-        setCep(dadosCadastroEndereco.cep())
-                .setLogradouro(dadosCadastroEndereco.logradouro())
-                .setNumero(dadosCadastroEndereco.numero())
-                .setComplemento(dadosCadastroEndereco.complemento())
-                .setBairro(dadosCadastroEndereco.bairro())
-                .setCidade(dadosCadastroEndereco.cidade())
-                .setUf(dadosCadastroEndereco.uf());
-    }
 
     private String cep;
     private String logradouro;
@@ -27,6 +14,20 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String uf;
+
+    public Endereco() {
+
+    }
+
+    public Endereco(FormularioEndereco formularioEndereco) {
+        setCep(formularioEndereco.cep())
+                .setLogradouro(formularioEndereco.logradouro())
+                .setNumero(formularioEndereco.numero())
+                .setComplemento(formularioEndereco.complemento())
+                .setBairro(formularioEndereco.bairro())
+                .setCidade(formularioEndereco.cidade())
+                .setUf(formularioEndereco.uf());
+    }
 
     public String cep() {
         return cep;
@@ -89,5 +90,42 @@ public class Endereco {
     public Endereco setUf(String uf) {
         this.uf = uf;
         return this;
+    }
+
+    public void atualizar(FormularioEndereco formularioEndereco) {
+        if (formularioEndereco.cep() != null) {
+            setCep(formularioEndereco.cep());
+        }
+        if (formularioEndereco.logradouro() != null) {
+            setLogradouro(formularioEndereco.logradouro());
+        }
+        if (formularioEndereco.numero() != null) {
+            setNumero(formularioEndereco.numero());
+        }
+        if (formularioEndereco.complemento() != null) {
+            setComplemento(formularioEndereco.complemento());
+        }
+        if (formularioEndereco.bairro() != null) {
+            setBairro(formularioEndereco.bairro());
+        }
+        if (formularioEndereco.cidade() != null) {
+            setCidade(formularioEndereco.cidade());
+        }
+        if (formularioEndereco.uf() != null) {
+            setUf(formularioEndereco.uf());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Endereco{" +
+                "cep='" + cep + '\'' +
+                ", logradouro='" + logradouro + '\'' +
+                ", numero='" + numero + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", cidade='" + cidade + '\'' +
+                ", uf='" + uf + '\'' +
+                '}';
     }
 }

@@ -14,7 +14,9 @@ public record FormularioDadosProfissionais(String armaQuadroServico, String post
         this.armaQuadroServico = armaQuadroServico.toUpperCase().strip();
         this.postoGraduacao = postoGraduacao.strip();
         this.nomeDeGuerra = nomeDeGuerra.toUpperCase().strip();
-        this.identidadeMilitar = identidadeMilitar.strip();
+        StringBuilder identidadeMilitarBuilder = new StringBuilder(identidadeMilitar.strip())
+                .insert(9, "-");
+        this.identidadeMilitar = identidadeMilitarBuilder.toString();
         this.precCp = precCp.strip();
         this.dataDePraca = dataDePraca;
         this.dataDePromocao = dataDePromocao;

@@ -1,13 +1,14 @@
 package br.jgabrielv.dados.dto.formulario;
 
-public record FormularioContato(String telefoneCelular, String email) {
+import br.jgabrielv.dados.dto.formulario.utils.NumeroTelefoneUtils;
 
-    public FormularioContato(String telefoneCelular, String email){
-        StringBuilder stringBuilder = new StringBuilder(telefoneCelular.strip())
-                .insert(0, "(")
-                .insert(3, ") ")
-                .insert(10,"-");
-        this.telefoneCelular = stringBuilder.toString();
+public record FormularioContato(String numeroTelefone, String email) {
+    public FormularioContato(String numeroTelefone, String email) {
+
+        this.numeroTelefone = NumeroTelefoneUtils.format(numeroTelefone);
         this.email = email.toLowerCase().strip();
+
     }
+
+
 }

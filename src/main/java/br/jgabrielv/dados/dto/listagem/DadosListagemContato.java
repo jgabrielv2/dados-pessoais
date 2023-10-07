@@ -6,7 +6,7 @@ public record DadosListagemContato(String telefoneCelular, String email) {
 
     public DadosListagemContato(Militar militar) {
         this(
-                militar.dadosDeContato().telefoneCelular(),
+                militar.dadosDeContato().numero(),
                 militar.dadosDeContato().email()
         );
     }

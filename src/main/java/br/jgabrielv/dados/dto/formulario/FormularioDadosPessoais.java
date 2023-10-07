@@ -2,8 +2,8 @@ package br.jgabrielv.dados.dto.formulario;
 
 import org.hibernate.validator.constraints.br.CPF;
 
-public record FormularioDadosPessoais(String identidadeCivil, @CPF String cpf, String nome) {
-    public FormularioDadosPessoais(String identidadeCivil, @CPF String cpf, String nome) {
+public record FormularioDadosPessoais(String identidadeCivil, @CPF(message = "CPF inválido!") String cpf, String nome) {
+    public FormularioDadosPessoais(String identidadeCivil, String cpf, String nome) {
         this.identidadeCivil = identidadeCivil.strip();
         StringBuilder cpfBuilder = new StringBuilder(cpf.strip())
                 .insert(3, ".")

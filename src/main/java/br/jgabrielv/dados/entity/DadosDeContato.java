@@ -4,28 +4,32 @@ import br.jgabrielv.dados.dto.formulario.FormularioContato;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.Email;
 
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+
 @Embeddable
 public class DadosDeContato {
 
-    private String telefoneCelular;
     @Email
     private String email;
+
+    private String numeroTelefone;
 
     public DadosDeContato() {
 
     }
 
     public DadosDeContato(FormularioContato formularioContato) {
-        setTelefoneCelular(formularioContato.telefoneCelular())
+        setNumeroTelefone(formularioContato.numeroTelefone())
                 .setEmail(formularioContato.email());
     }
 
-    public String telefoneCelular() {
-        return telefoneCelular;
+
+    public String numero() {
+        return numeroTelefone;
     }
 
-    public DadosDeContato setTelefoneCelular(String telefoneCelular) {
-        this.telefoneCelular = telefoneCelular;
+    public DadosDeContato setNumeroTelefone(String numeroTelefone) {
+        this.numeroTelefone = numeroTelefone;
         return this;
     }
 
@@ -39,8 +43,8 @@ public class DadosDeContato {
     }
 
     public void atualizar(FormularioContato formularioContato) {
-        if (formularioContato.telefoneCelular() != null) {
-            setTelefoneCelular(formularioContato.telefoneCelular());
+        if (formularioContato.numeroTelefone() != null) {
+            setNumeroTelefone(formularioContato.numeroTelefone());
         }
         if (formularioContato.email() != null) {
             setEmail(formularioContato.email());

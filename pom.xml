@@ -8,7 +8,7 @@
 		<version>3.1.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.mil.eb.1rcg</groupId>
+	<groupId>br.jgabrielv</groupId>
 	<artifactId>dados</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dados</name>

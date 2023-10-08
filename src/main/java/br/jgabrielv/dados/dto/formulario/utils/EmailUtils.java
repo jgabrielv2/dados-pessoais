@@ -3,11 +3,11 @@ package br.jgabrielv.dados.dto.formulario.utils;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 
-public class EmailValidator {
+public class EmailUtils {
 
     public static InternetAddress parse(String stringEmail) {
         try {
-            return new InternetAddress((stringEmail));
+            return new InternetAddress(stringEmail);
         } catch (AddressException e) {
             throw new IllegalArgumentException(e);
         }
